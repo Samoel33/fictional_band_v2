@@ -1,0 +1,96 @@
+{% extends 'base.html' %} {% block title %} {{ event.name }} | Details
+{%endblock %} {% block content %}
+<div class="container mt-4">
+  <div class="card shadow">
+    {% if event.image %}
+    <img
+      src="{{ event.image.url }}"
+      class="card-img-top img-fluid rounded-start"
+      style="height: 400px; object-fit: contain"
+      alt="{{ event.name }}"
+    />
+    {% endif %}
+    <div class="card-body">
+      <h3 class="card-title">{{ event.name }}</h3>
+      <p class="card-text">{{ event.description }}</p>
+      <p class="card-text">
+        <small class="text-muted">{{ event.date }}</small>
+      </p>
+    </div>
+    <div class="card-footer">
+            <h2>Comments and Likes</h2>
+            {% if not event.comments.all and not event.likes.all %}
+            <div class="alert alert-info" role="alert">
+              No comments or likes available.😔
+            </div>
+            {% else %}
+            <div class="alert alert-primary d-flex" role="alert">
+              <p  class="btn btn-warning">
+                📑Comments:{{ event.comments.count }}
+              </p>
+              <form action="{% url 'band:like_event' event.id %}" method="POST">
+                {% csrf_token %}
+                <button
+                  type="submit"
+                  class="btn btn-success"
+                  value="{{event.id}}"
+                >
+                  👍Like:{{ event.likes.count }}
+                </button>
+              </form>
+            </div>
+            {% endif %}
+  </div>
+  <div class="container">
+    <div class="row mt-4">
+      <div class="col-md-12">
+        <h2>Comments</h2>
+        {% for comment in event.comments.all %}
+        <div class="alert alert-secondary" role="alert">
+        <div class="d-flex ms-auto">
+            <small class="text-muted">{{ comment.date }}: {{comment.time}}</small>
+        </div>
+        <hr>
+          <strong>{{ comment.user.username }}</strong>: {{ comment.review_text}} - Rated : {{comment.rating}}
+          
+          </div>
+          {%endfor %}
+          
+            <form
+              action="{% url 'band:comment' event.id %}"
+              method="post"
+              enctype="multipart/form-data"
+              novalidate
+            >
+              {% csrf_token %} {{form}}
+              <label for="review_text" class="form-control">Comment</label>
+                <textarea
+                    class="form-control"
+                    id="review_text"
+                    name="review_text"
+                    placeholder="Enter your comment here..."
+                    rows="3"></textarea>
+                <label for="rating" class="form-control">Rating</label>
+                <select class="form-select" id="rating" name="rating">
+                  <option selected>Choose...</option>
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                  <option value="4">4</option>
+                  <option value="5">5</option>
+                </select>
+              <div
+                class="btn-group mt-1"
+                role="group"
+                aria-label="Basic example"
+              >
+                <button type="submit" class="btn btn-primary">submit</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  {% endblock %}
+</div>

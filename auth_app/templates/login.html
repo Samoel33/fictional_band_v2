@@ -1,0 +1,39 @@
+{% extends "base.html" %} {% block title %} The Sam's Band|BookUs {%endblock%}
+{% load static %} {%block content%}
+
+<div class="container mt-5">
+  <a href="{{request.META.HTTP_REFERER}}" class="nav-link fs-3 fw-bold"
+    >◀️Previous Page</a
+  >
+  <form
+    class="form-horizontal mt-4 mb-4 shadow-sm p-3 mb-5 bg-body rounded"
+    action="{% url 'auth_app:login' %}"
+    method="post"
+    enctype="multipart/form-data"
+    novalidate
+  >
+    <h1 class="text-center text-primary">Login</h1>
+    {% csrf_token %}
+    <div class="mb-3 form-group">
+      <label for="{{form.username.label}}" class="form-label"
+        >{{form.username.label}}</label
+      >
+      {{form.username}}
+    </div>
+    <div class="mb-3 form-group">
+      <label for="{{form.password1.label}}" class="form-label"
+        >{{form.password1.label}}</label
+      >
+      {{form.password1}}
+    </div>
+    <div class="form-group mt-3">
+      <div class="col-sm-offset-2 col-sm-10">
+        <button type="submit" class="btn btn-primary">Login</button>
+      </div>
+    </div>
+    {%if error %}
+    <div class="text-danger mt-1">{{error}}</div>
+    {% endif %}
+  </form>
+</div>
+{%endblock%}

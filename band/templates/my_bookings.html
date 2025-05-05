@@ -1,0 +1,60 @@
+{% extends 'base.html' %} {% block title %} The Sam's Band | My Bookings
+{%endblock%} {% load static %} {% block content %}
+<div class="container mt-4 border-2 border-primary">
+  <div class="tab-content" id="pills-tabContent">
+    <div
+      class="tab-pane fade show active"
+      id="pills-events"
+      role="tabpanel"
+      aria-labelledby="pills-events-tab"
+    >
+      <div class="d-flex gap-1 flax-wrap">
+        {% for booking in bookings %}
+        <div class="card mb-3" style="max-width: 540px">
+          <div class="row g-0">
+            <div class="col-md-12">
+              <img
+                src="{{ event.image.url }}"
+                class="img-fluid rounded-start"
+                alt="..."
+              />
+            </div>
+            <div class="col-md-12">
+              <div class="card-body">
+                <h5 class="card-title">{{ booking.event_name }}</h5>
+                <p class="card-text">{{ booking.description }}</p>
+                <p class="card-text">
+                  <small class="text-muted">{{ booking.booking_date }}</small>
+                </p>
+              </div>
+              <div class="card-footer">
+                <h2>Booking Status</h2>
+                {% if booking.band_response == 'Confirmed' %}
+                <div class="alert alert-success" role="alert">
+                  Your booking is confirmed! 🎉
+                </div>
+                {% elif booking.band_response == "Pending" %}
+                <div class="alert alert-warning" role="alert">
+                  Your booking is pending. Please wait for confirmation. ⏳
+                </div>
+                {% else %}
+                <div class="alert alert-danger" role="alert">
+                  Your booking has been rejected. Please contact us for more
+                  details. ❌
+                </div>
+                {% endif %}
+              </div>
+            </div>
+          </div>
+          {% if not bookings %}
+          <div class="alert alert-info" role="alert">
+            You haven't booked the band.😔
+          </div>
+          {% endif %}
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</div>
+{%endblock%}

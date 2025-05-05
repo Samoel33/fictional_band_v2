@@ -1,0 +1,195 @@
+{% extends "base.html" %} {% block title %} The Sam's Band|Events {%endblock%}
+{% load static %} {%block content%}
+<div class="container mt-4 border-2 border-primary">
+  <!-- Nav tabs styled as buttons -->
+  <ul
+    class="nav nav-pills border-2 border-warning mb-3"
+    id="pills-tab"
+    role="tablist"
+  >
+    <li class="nav-item" role="presentation">
+      <button
+        class="nav-link active"
+        id="pills-events-tab"
+        data-bs-toggle="pill"
+        data-bs-target="#pills-events"
+        type="button"
+        role="tab"
+        aria-controls="pills-events"
+        aria-selected="true"
+      >
+        Events
+      </button>
+    </li>
+    <li class="nav-item" role="presentation">
+      <button
+        class="nav-link"
+        id="pills-upcoming-tab"
+        data-bs-toggle="pill"
+        data-bs-target="#pills-upcoming"
+        type="button"
+        role="tab"
+        aria-controls="pills-upcoming"
+        aria-selected="false"
+      >
+        Upcoming Events
+      </button>
+    </li>
+  </ul>
+
+  <!-- Tab panes -->
+  <div class="tab-content" id="pills-tabContent">
+    <div
+      class="tab-pane fade show active"
+      id="pills-events"
+      role="tabpanel"
+      aria-labelledby="pills-events-tab"
+    >
+      <div class="row gap-0">
+        {% for event in past_events %}
+        <div class="col-12 col-sm-12 col-md-6 col-lg-6 mb-4 c-card">
+          <div class="card mb-3" style="max-width: 540px">
+            <div class="row g-0">
+              <div class="col-12 col-md-12">
+                <img
+                  src="{{ event.image.url }}"
+                  class="img-fluid rounded-start"
+                  alt="..."
+                />
+              </div>
+              <div class="col-12 col-md-12">
+                <div class="card-body">
+                  <h5 class="card-title">{{ event.name }}</h5>
+                  <p class="card-text">{{ event.description }}</p>
+                  <p class="card-text">
+                    <small class="text-muted">{{ event.date }}</small>
+                  </p>
+                </div>
+                <div class="card-footer">
+                  <h2>Comments and Likes</h2>
+                  {% if not event.comments.all and not event.likes.all %}
+                  <div class="alert alert-info" role="alert">
+                    No comments or likes available.😔
+                  </div>
+                  {% else %}
+                  <div class="alert alert-primary" role="alert">
+                    <div class="row gap-0">
+                      <div class="col-12 col-md-12 col-lg-4">
+                        <p
+                          class="btn btn-warning"
+                          style="width: 150px; height: 50px"
+                        >
+                          📑Comments:{{ event.comments.count }}
+                        </p>
+                      </div>
+                      <div class="col-12 col-md-12 col-lg-4">
+                        <form
+                          action="{% url 'band:like_event' event.id %}"
+                          method="POST"
+                        >
+                          {% csrf_token %}
+                          <button
+                            type="submit"
+                            class="btn btn-success m-1"
+                            style="width: 150px; height: 50px"
+                            value="{{event.id}}"
+                          >
+                            👍Like:{{ event.likes.count }}
+                          </button>
+                        </form>
+                      </div>
+                      <div class="col-12 col-md-12 col-lg-4">
+                        <a
+                          href="{% url 'band:details' event.id %}"
+                          class="btn btn-sm btn-primary m-1"
+                          style="width: 150px; height: 50px"
+                          >Read More...</a
+                        >
+                      </div>
+                    </div>
+                  </div>
+                  {% endif %}
+                  <form
+                    action="{% url 'band:comment' event.id %}"
+                    method="post"
+                    enctype="multipart/form-data"
+                    novalidate
+                  >
+                    {% csrf_token %} {{form}}
+                    <div
+                      class="btn-group mt-1"
+                      role="group"
+                      aria-label="Basic example"
+                    >
+                      <button type="submit" class="btn btn-primary">
+                        submit
+                      </button>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+          {% if not past_events %}
+          <div class="alert alert-info" role="alert">
+            No events available.😔
+          </div>
+          {% endif %}
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+
+    <div
+      class="tab-pane fade"
+      id="pills-upcoming"
+      role="tabpanel"
+      aria-labelledby="pills-upcoming-tab"
+    >
+      <div class="d-flex gap-2 flax-wrap">
+        {% for event in up_coming_events %}
+        <div class="card mb-3" style="max-width: 540px">
+          <div class="row g-0">
+            <div class="col-12 col-md-12">
+              <img
+                src="{{ event.image.url }}"
+                class="img-fluid rounded-start"
+                alt="..."
+              />
+            </div>
+            <div class="col-12 col-md-12">
+              <div class="card-body">
+                <h5 class="card-title">{{ event.name }}</h5>
+                <p class="card-text">{{ event.description }}</p>
+                <p class="card-text">
+                  <small class="text-muted">{{ event.date }}</small>
+                </p>
+              </div>
+              <div class="alert alert-primary d-flex" role="alert">
+                <form
+                  action="{% url 'band:like_event' event.id %}"
+                  method="POST"
+                >
+                  {% csrf_token %}
+                  <button
+                    type="submit"
+                    class="btn btn-success"
+                    value="{{event.id}}"
+                  >
+                    👍Like:{{ event.likes.count }}
+                  </button>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+        {% endfor %} {% if not up_coming_events %}
+        <div class="alert alert-info" role="alert">
+          No upcoming events available.😔
+        </div>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</div>
+{%endblock%}

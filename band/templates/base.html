@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Simple Fictional Band website" />
+    <meta name="keywords" content="Django,Bootstrap, Bands, Awards" />
+    {%load static%}
+    <title>{%block title%} Fictional Band{%endblock%}</title>
+    {%load django_bootstrap5%} {%bootstrap_css%}
+    <link rel="stylesheet" href="{% static 'style.css' %}" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+    />
+  </head>
+  <body>
+    <header class="container sticky-top">
+      <nav class="navbar navbar-expand-md navbar-default bg-primary">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="/">
+            <img
+              src="{% static 'Sam.png' %}"
+              alt="Logo"
+              class="img-fluid"
+              style="width: 80px; height: 80px; object-fit: contain"
+            />
+          </a>
+          <button
+            class="navbar-toggler"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#navbarID"
+            aria-controls="navbarID"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
+          >
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarID">
+            <div class="navbar-nav fs-4">
+              {% for nav_item in nav_items%}
+              <a
+                href="{{nav_item.url}}"
+                class="nav-link text-white text-capitalize {% if request.resolver_match.url_name == nav_item.name %}active_nav{%endif%}"
+                >{{nav_item.name}}</a
+              >
+              {%endfor%}
+            </div>
+            <div class="navbar-nav ms-auto fs-4">
+              <div
+                class="btn-group"
+                style="width: 250px"
+                role="group"
+                aria-label="Basic example"
+              >
+                {% if request.user.is_authenticated %}
+                <div
+                  class="btn-group d-flex justify-contect-center align-items-center gap-1 ml-1 ms-auto"
+                  role="group"
+                >
+                  <strong class="mx-1">{{request.user.username}}</strong>
+                  <a
+                    href="{% url 'band:my_bookings' %}"
+                    type="button"
+                    class="btn btn-warning btn-sm"
+                    >My Bookings</a
+                  >
+                  <a
+                    href="{% url 'auth_app:logout' %}"
+                    class="btn btn-danger btn-sm"
+                    >Logout</a
+                  >
+                </div>
+                {% else %}
+                <a
+                  href="{% url 'auth_app:login' %}"
+                  type="button"
+                  class="btn btn-warning m-1"
+                  >Login</a
+                >
+                <a
+                  href="{% url 'auth_app:register' %}"
+                  type="button"
+                  class="btn btn-danger m-1"
+                >
+                  Register
+                </a>
+                {% endif %}
+              </div>
+            </div>
+            <div
+          </div>
+        </div>
+      </nav>
+    </header>
+    {% block content %}{%endblock%} {%bootstrap_javascript%}
+  </body>
+</html>

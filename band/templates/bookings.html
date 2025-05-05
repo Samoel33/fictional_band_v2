@@ -1,0 +1,29 @@
+{% extends "base.html" %} 
+
+{% block title %} The Sam's Band | BookUs {%endblock%}
+{% load static %}
+
+{%block content%}
+<div class="container">
+<form action="{% url 'band:booking' %}" method="post" enctype="multipart/form-data" novalidate class="form-horizontal mt-4 mb-4 shadow-sm p-3 mb-5 bg-body rounded">
+  {% csrf_token %}
+  <h1 class="text-center text-primary">
+     <a class="navbar-brand" href="/">
+            <img
+              src="{% static 'Sam.png' %}"
+              alt="Logo"
+              class="img-fluid"
+              style="width: 80px; height: 80px; object-fit: contain"
+            />
+          </a>
+    Book Us</h1>
+
+  <a href="{{request.META.HTTP_REFERER}}" class="nav-link fs-3 fw-bold">◀️Previous Page</a>
+  {{form}}
+  <div class="form-group mt-3">
+    <div class="col-sm-offset-2 col-sm-10">
+      <button type="submit" class="btn btn-danger">Book Us</button>
+    </div>
+</form>
+</div>
+{%endblock%}

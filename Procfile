@@ -1,0 +1,1 @@
+web gunicorn fictional_band.wsgi:application --log-file -
