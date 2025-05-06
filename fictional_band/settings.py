@@ -14,6 +14,7 @@ import os
 from pathlib import Path
 import django_heroku
 import dj_database_url
+from decouple import config
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -23,10 +24,10 @@ LOGIN_URL = "/login"
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = "django-insecure-$(jsky-%q0i3n!$t!)o(8-6lw2mth9a$o2_2vr3)v!d7y3yh+*"
+SECRET_KEY = config("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = config("DEBUG")
 
 ALLOWED_HOSTS = []
 

@@ -1,0 +1,5 @@
+# No env for this project for now
+.env
+venv/
+# Avoid copying the Dockerfile into the image
+Dockerfile
