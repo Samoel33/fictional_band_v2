@@ -1,8 +1,8 @@
-# Fictional Band App
+# 🎸 Fictional Band App
 
 ## 📌 Description
 
-Fictional band application, about the Sam's Band that showcase their journey, awards winnings, previous events, upcoming events and give audience and opportunity to rate and comment their works.
+Fictional Band is a Django web application for "Sam's Band" that showcases the band's journey, awards, previous events, and upcoming shows. Users can interact by commenting, rating, and booking the band for events.
 
 ---
 
@@ -14,106 +14,95 @@ Fictional band application, about the Sam's Band that showcase their journey, aw
 - [Features](#-features)
 - [Project Structure](#-project-structure)
 - [Tech Stack](#-tech-stack)
+- [Environment Variables](#-environment-variables)
+- [Docker (Optional)](#-docker-optional)
+- [Git Ignore](#-git-ignore)
 - [Credits](#-credits)
 
 ---
 
 ## 🛠 Installation
 
-To install and run this project locally:
+### 🔧 Local Setup with Pipenv
 
-1. Clone the repository:
+1. **Clone the repository:**
 
-   ```bash
-   git clone https://github.com/Samoel33/fictional-band.git
-   cd fictional_band
-   ```
+```bash
+git clone https://github.com/Samoel33/fictional_band_v2.git
+cd fictional_band
+```
 
-2. Set up a virtual environment:
+2. **Install dependencies and activate the environment:**
 
-   ```bash
-   pipenv shell
-   source env/bin/activate  # On Windows: env\Scripts\activate
-   ```
+```bash
+pipenv install
+pipenv shell
+```
 
-3. Install the dependencies:
+or
 
-   ```bash
-   pip install -r requirements.txt
-   pip install django-boostrap5
-   ```
+```bash
+pip install -r requirements.txt
+```
 
-4. Apply migrations:
+3. **Apply migrations:**
 
-   ```bash
-   python manage.py migrate
-   ```
+```bash
+python manage.py migrate
+```
 
-5. Run the development server:
-   ```bash
-   python manage.py runserver
-   ```
+4. **Run the development server:**
 
-Visit `http://127.0.0.1:8000` to use the app.
+```bash
+python manage.py runserver
+```
+
+Visit [http://127.0.0.1:8000](http://127.0.0.1:8000) to view the app.
 
 ---
 
 ## ▶️ Usage
 
-Once installed:
-
-- Access the homepage to view your about the band.
-- Navigation bar present on every page
-- Click “Event” to see Past events.
-- Sub navigation in Past event ( click "upcoming events") to see up coming events
-- Click "Booking" to book the band for your function or event, Booking
-  require user to be logged in.
-- Login with credentials if register user, else click "Register" to register in our database.
-- If logged in, navigation shows two button left end, click "My Bookings" to view your booking and status.
-  -To comment on past Event fill in the form and give rating and click "submit" to save the comment.
-  -Click "Like" to Like and event and Click again to remove the like.
-- All updates are saved to the local database.
-
-### 📸 Screenshots
-
-> _(Add your own screenshots under a `/screenshots/` folder and reference them here)_
-
-![Home Page](screenshots/Homepage_and_navigation.png)
-![Events](screenshots/pastevents.png)
-![Upcoming Events](screenshots/Upcoming_events.png)
+- Visit the homepage to learn about the band.
+- Navigate to "Events" → "Past Events" or "Upcoming Events".
+- Register/Login to comment or book the band.
+- Bookings require login and can be viewed under "My Bookings".
+- Like/unlike events and submit comments and ratings.
+- All data is stored in a local SQLite database.
 
 ---
 
 ## ✨ Features
 
-- ✅ Register and Login
-- ✅ Add Comments and Like Past Events
-- ✅ View Past and Upcoming Events
-- ✅ Book the Band
-- ✅ View Your Bookings and see booking status
-- ✅ Mobile-friendly interface using Bootstrap and CSS
-- ✅ Local database storage with Django ORM
+- ✅ User registration and login
+- ✅ Comment and like past events
+- ✅ View past and upcoming events
+- ✅ Book the band for an event
+- ✅ Track your bookings and their status
+- ✅ Responsive UI with Bootstrap
+- ✅ Uses Django ORM and SQLite for storage
 
 ---
 
 ## 🧱 Project Structure
 
 ```
-Fictional_band/
+fictional_band/
 ├── auth_app/
-|     ├──templates
+│   └── templates/
 ├── band_app/
-├      ├──templates
-├── event_images/
+│   └── templates/
 ├── fictional_band/
+├── event_images/
 ├── static/
 ├── screenshots/
 ├── db.sqlite3
 ├── manage.py
 ├── Pipfile
 ├── Pipfile.lock
-├── Procfile
-└── requirements.txt
+├── requirements.txt
+├── .env               # (not committed)
+└── Procfile
 ```
 
 ---
@@ -123,8 +112,81 @@ Fictional_band/
 - Python 3.13
 - Django 4.2.20
 - SQLite
-- HTML5 & CSS3
-- Bootstrap 5
+- HTML5, CSS3, Bootstrap 5
+- JavaScript (for interactivity)
+- Docker (optional)
+- Pipenv for dependency management
+
+---
+
+## 🔐 Environment Variables
+
+Create a `.env` file in the project root with the following:
+
+```env
+SECRET_KEY=your-django-secret-key
+DEBUG=True
+```
+
+In your `settings.py`, use:
+
+```python
+from decouple import config
+
+SECRET_KEY = config('SECRET_KEY')
+DEBUG = config('DEBUG', default=False, cast=bool)
+```
+
+---
+
+## 🐳 Docker (Optional)
+
+If you prefer Docker:
+
+🛠 Prerequisites
+Docker installed on your machine.
+
+1. Make sure you have a valid `Dockerfile`.
+2. docker build -t fictional-band .
+3. docker run -p 8000:8000 fictional-band
+
+🌐 Access the App
+Once the container is running, visit:
+Visit: [http://localhost:8000](http://localhost:8000)
+
+---
+
+## 📄 .gitignore (Important)
+
+```
+# Python
+__pycache__/
+*.py[cod]
+*.sqlite3
+*.log
+
+# Pipenv
+Pipfile.lock
+
+# Environment
+.env
+.env.*
+
+# Virtual Environments (just in case)
+env/
+venv/
+
+# VSCode
+.vscode/
+```
+
+---
+
+## 📸 Screenshots
+
+![Home Page](screenshots/Homepage_and_navigation.png)  
+![Past Events](screenshots/pastevents.png)  
+![Upcoming Events](screenshots/Upcoming_events.png)
 
 ---
 
