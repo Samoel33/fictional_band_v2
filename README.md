@@ -144,6 +144,7 @@ DEBUG = config('DEBUG', default=False, cast=bool)
 If you prefer Docker:
 
 🛠 Prerequisites
+
 Docker installed on your machine.
 
 1. Make sure you have a valid `Dockerfile`.
@@ -151,7 +152,7 @@ Docker installed on your machine.
 3. docker run -p 8000:8000 fictional-band
 
 🌐 Access the App
-Once the container is running, visit:
+Once the container is running,
 Visit: [http://localhost:8000](http://localhost:8000)
 
 ---
