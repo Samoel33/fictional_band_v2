@@ -139,7 +139,7 @@ DEBUG = config('DEBUG', default=False, cast=bool)
 
 ---
 
-## 🐳 Docker (Optional)
+## 🐳 Docker 
 
 If you prefer Docker:
 
