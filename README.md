@@ -15,7 +15,7 @@ Fictional Band is a Django web application for "Sam's Band" that showcases the b
 - [Project Structure](#-project-structure)
 - [Tech Stack](#-tech-stack)
 - [Environment Variables](#-environment-variables)
-- [Docker (Optional)](#-docker-optional)
+- [Docker](#-docker)
 - [Git Ignore](#-git-ignore)
 - [Credits](#-credits)
 
@@ -114,7 +114,7 @@ fictional_band/
 - SQLite
 - HTML5, CSS3, Bootstrap 5
 - JavaScript (for interactivity)
-- Docker (optional)
+- Docker 
 - Pipenv for dependency management
 
 ---
