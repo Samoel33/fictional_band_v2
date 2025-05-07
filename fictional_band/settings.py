@@ -24,10 +24,10 @@ LOGIN_URL = "/login"
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = config("SECRET_KEY")
+SECRET_KEY = config("SECRET_KEY", default="dummy-secret-key-for-docs")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = config("DEBUG")
+DEBUG = config("DEBUG", default=False, cast=bool)
 
 ALLOWED_HOSTS = []
 
@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     "band.apps.BandConfig",
     "auth_app.apps",
     "django_bootstrap5",
+    "decouple",
 ]
 
 MIDDLEWARE = [
